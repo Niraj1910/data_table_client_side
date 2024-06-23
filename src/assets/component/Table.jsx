@@ -1,8 +1,10 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useMemo } from "react";
 import {
   MaterialReactTable,
   useMaterialReactTable,
 } from "material-react-table";
+
+import sample_data from "../../../sample_data.json";
 
 function formatDate(dateString) {
   let date = new Date(dateString);
@@ -25,22 +27,6 @@ function formatDate(dateString) {
 }
 
 const Table = () => {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("/sample_data.json");
-        const result = await response.json();
-        setData(result);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
   const columns = useMemo(
     () => [
       {
@@ -102,7 +88,7 @@ const Table = () => {
   );
 
   const table = useMaterialReactTable({
-    data,
+    sample_data,
     columns,
     enableFacetedValues: true,
     initialState: { showColumnFilters: true },
